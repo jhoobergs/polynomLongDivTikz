@@ -1,0 +1,28 @@
+{
+    "extends": [
+        "tslint-config-standard",
+        "tslint-no-unused-expression-chai"
+    ],
+    "rules": {
+        // eslint: "comma-dangle": ["error", "always-multiline"]
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "always",
+                "singleline": "never"
+            }
+        ],
+        // eslint: "spaced-comment": 0,
+        "comment-format": true,
+        "member-ordering": false,
+        "no-string-throw": false,
+        "no-trailing-whitespace": [
+            true,
+            "ignore-template-strings"
+        ],
+        "arrow-parens": [
+            true,
+            "ban-single-arg-parens"
+        ]
+    }
+}

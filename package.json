@@ -1,0 +1,32 @@
+{
+  "name": "polynom-long-div-tikz",
+  "version": "1.0.0",
+  "description": "npm package that generates tikz code for polynomial long divisions",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.1.7"
+  },
+  "devDependencies": {
+    "@types/prompt-sync": "^4.1.0",
+    "tslint": "^5.20.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.6.3"
+  },
+  "scripts": {
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint:report": "tslint -c tslint.json -p tsconfig.json -t junit -o lint_results/lint_results.xml",
+    "prebuild": "rm -r dist || true",
+    "build": "tsc",
+    "test": "npm run build && npm run test:raw",
+    "test:report": "npm run build && npm run test:raw -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test_results/test_results.xml",
+    "test:raw": "mocha \"dist/test/tests/*_test.js\"",
+    "prestart": "npm run build",
+    "start": "npm run start:raw",
+    "start:raw": "node dist/src/index.js"
+  },
+  "author": "JESSE HOOBERGS",
+  "license": "ISC"
+}
