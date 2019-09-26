@@ -27,7 +27,7 @@ const parsePolynomial: (s: string) => Polynom = (s: string) => {
             }
             else if(xSplitted.length === 1 && p.indexOf('^') === -1){
                 return {
-                    factor: Number.parseFloat(xSplitted[0]),
+                    factor: Number.parseFloat((xSplitted[0] === '-') ? '-1' : xSplitted[0]),
                     exponent: 1
                 }
             }
@@ -109,7 +109,7 @@ const getDivisionStep: (p1: Polynom, p2: Polynom) => [PolynomPart, Polynom, Poly
 
 const printPolynom: (p: Polynom) => string = (p: Polynom) => {
     const s = p.items.map(part => {
-        return `${(Math.abs(part.factor) !== 1) ? part.factor : (part.factor < 0) ? '-' : ''}${part.exponent !== 0 ? 'x' : ''}${(part.exponent !== 1 && part.exponent !== 0) ? `^${part.exponent}` : ''}`
+        return `${(Math.abs(part.factor) !== 1 || part.exponent === 0) ? part.factor : (part.factor < 0) ? '-' : ''}${part.exponent !== 0 ? 'x' : ''}${(part.exponent !== 1 && part.exponent !== 0) ? `^${part.exponent}` : ''}`
     }).join('+').replace(new RegExp('\\+-','g'),'-')
     return (s === '') ? '0' : s
 }
@@ -133,7 +133,7 @@ const toTex: (p1: Polynom, p2: Polynom) => string = (p1: Polynom, p2: Polynom) =
         tex = tex.concat(polynomData[0])
         yIndex += 1
         tex.push(toTexDrawLine(polynomData[2], -(yIndex * 0.5) + 0.2, polynomData[1] + 0.8, -(yIndex * 0.5) + 0.2))
-        tex.push(toTexDrawLine(polynomData[2] - 0.2, -(yIndex * 0.5) + 0.2, polynomData[2] - 0.05, -(yIndex * 0.5) + 0.2))
+        tex.push(toTexDrawLine(polynomData[2] - 0.3, -(yIndex * 0.5) + 0.2, polynomData[2] - 0.1, -(yIndex * 0.5) + 0.2))
         
         tex = tex.concat(toTexPolynom(allExponentPolynom(step[2]), yIndex, maxExponent, maxHasMin)[0])
         yIndex += 1
@@ -178,10 +178,10 @@ const toTexPolynom: (p: Polynom, yIndex: number, maxExponent: number, maxHasMin:
         const part = `${Math.round(100*Math.abs(i.factor))/100}${i.exponent !== 0 ? 'x' : ''}${i.exponent > 1 ? `^${i.exponent}` : ''}`
         let index = (maxExponent - i.exponent) * 2 + ((maxHasMin) ? 0 : -1)
         if(i.exponent === maxExponent){
-            index += 1
             if(i.factor < 0){
                 return [{index, val: '-'}, {index: index + 1, val: part}]
             }
+            index += 1
             return [{index, val: part}]
         }
         else if(idx === 0){
@@ -201,8 +201,8 @@ let p2 = prompt()('Enter the second polynomial: ');*/
 
 //let p1 = parsePolynomial('x^5 - x^3 + x^3 + x - x^2')
 //let p2 = parsePolynomial('1.2 - 2x^3 + x^3 + 5x - x^2')
-let p1 = parsePolynomial('2x^3 - 8')
-let p2 = parsePolynomial('x + 2')
+let p1 = parsePolynomial('-x^3+9x+2')
+let p2 = parsePolynomial('x+4')
 
 //console.log(p1)
 //console.log(printPolynom(p1))
