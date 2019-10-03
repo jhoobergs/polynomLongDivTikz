@@ -62,6 +62,8 @@ const simplifyPolynom: (p: Polynom) => Polynom = (p: Polynom) => {
 }
 
 const allExponentPolynom: (p: Polynom) => Polynom = (p: Polynom) => {
+    if(p.items.length === 0)
+        return p
     const maxExponent = p.items[0].exponent
     const s_p = simplifyPolynom(p)
     return { items: Array.from({ length: maxExponent + 1 }, (v, k) => k).reverse().map(e => {
@@ -174,6 +176,12 @@ const toTexDrawLine = (from_x: number, from_y: number, to_x: number, to_y: numbe
 }
 
 const toTexPolynom: (p: Polynom, yIndex: number, maxExponent: number, maxHasMin: boolean) => [string[], number, number] = (p: Polynom, yIndex: number, maxExponent: number, maxHasMin: boolean) => {
+    if(p.items.length === 0){
+        p.items = [{
+            factor: 0,
+            exponent: 0,
+        }]
+    }
     const placings = p.items.map((i, idx) => {
         const part = `${Math.round(100*Math.abs(i.factor))/100}${i.exponent !== 0 ? 'x' : ''}${i.exponent > 1 ? `^${i.exponent}` : ''}`
         let index = (maxExponent - i.exponent) * 2 + ((maxHasMin) ? 0 : -1)
@@ -201,8 +209,8 @@ let p2 = prompt()('Enter the second polynomial: ');*/
 
 //let p1 = parsePolynomial('x^5 - x^3 + x^3 + x - x^2')
 //let p2 = parsePolynomial('1.2 - 2x^3 + x^3 + 5x - x^2')
-let p1 = parsePolynomial('-x^3+9x+2')
-let p2 = parsePolynomial('x+4')
+let p1 = parsePolynomial('3x^3+8x^2-x+1')
+let p2 = parsePolynomial('3x+2')
 
 //console.log(p1)
 //console.log(printPolynom(p1))
