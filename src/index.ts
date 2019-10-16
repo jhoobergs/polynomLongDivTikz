@@ -204,6 +204,36 @@ const toTexPolynom: (p: Polynom, yIndex: number, maxExponent: number, maxHasMin:
     return [placings.map(i => `\\node[anchor=west] at (${i.index * 1.0},${yIndex * -0.5}) {$${i.val}$};`), placings.reduce((a, b) => Math.max(a, b.index), 0), placings.reduce((a, b) => Math.min(a, b.index), maxExponent)]
 }
 
+const round = (n: number, p: number = 2) => {
+    return Math.round(Math.pow(10, p) * Math.round(n)) / Math.pow(10, p)
+}
+
+const hornertex: (p: Polynom, a: number) => string = (p: Polynom, a: number) => {
+    const tex: string[] = []
+    const s_p1 = simplifyPolynom(p)
+    const maxExponent = s_p1.items[0].exponent
+    const p1 = allExponentPolynom(s_p1)
+    tex.push(toTexDrawLine(0.5,0,0.5,1.2))
+    const separation = 1
+    tex.push(toTexDrawLine(0.5, 0, round(1+maxExponent*separation), 0))
+    const bottomHeight = 0.2
+    tex.push(`\\node[anchor=west] at (${0},${bottomHeight}) {$${a}$};`)
+
+    tex.push(...p1.items.map((it, idx) => `\\node[anchor=east] at (${round(separation*(1+idx))},${1}) {$${it.factor}$};`))
+
+    const solHeight = -0.3
+    let valuePushedDown = p1.items[0].factor
+    tex.push(`\\node[anchor=east] at (${separation},${solHeight}) {$${round(valuePushedDown)}$};`)
+    for(let i = 1; i <= maxExponent; i++){
+        const newValue = valuePushedDown * a
+        valuePushedDown = p1.items[i].factor + newValue
+        tex.push(`\\node[anchor=east] at (${round(separation * (i + 1))},${bottomHeight}) {$${round(newValue)}$};`)
+        tex.push(`\\node[anchor=east] at (${round(separation * (i + 1))},${solHeight}) {$${round(valuePushedDown)}$};`)
+    }
+
+    return tex.join('\n')
+}
+
 /*let p1 = parsePolynomial(prompt()('Enter the first polynomial: '));
 let p2 = prompt()('Enter the second polynomial: ');*/
 
@@ -211,7 +241,7 @@ let p2 = prompt()('Enter the second polynomial: ');*/
 //let p2 = parsePolynomial('1.2 - 2x^3 + x^3 + 5x - x^2')
 let p1 = parsePolynomial('3x^3+8x^2-x+1')
 let p2 = parsePolynomial('3x+2')
-
+let p3 = parsePolynomial('2x^3+x^2-5x+2')
 //console.log(p1)
 //console.log(printPolynom(p1))
 //console.log(printPolynom(simplifyPolynom(p1)))
@@ -243,4 +273,5 @@ let p2 = parsePolynomial('3x+2')
 
 //console.info(`Calculating (${p1}) / (${p2})`)
 
-console.log(toTex(p1, p2))
+//console.log(toTex(p1, p2))
+console.log(hornertex(p3,3))
