@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="http://tikzjax.com/v1/fonts.css">
-    <script src="http://tikzjax.com/v1/tikzjax.js"></script>
+    <link rel="stylesheet" type="text/css" href="v1/fonts.css">
+    <script src="v1/tikzjax.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript">
         function calculateHorner() {
@@ -32,7 +32,7 @@
         function calculatePolynomLongDivision() {
             console.log("calculating")
             let p1 = parsePolynomial(document.getElementById("polynomlongdiv-polynom1").value)
-            let p2 = parsePolynomial(document.getElementById("polynomlongdiv-polynom1").value)
+            let p2 = parsePolynomial(document.getElementById("polynomlongdiv-polynom2").value)
             let d = document.getElementById("polynomlongdiv-result")
             let t = document.getElementById("polynomlongdiv-tikz")
 

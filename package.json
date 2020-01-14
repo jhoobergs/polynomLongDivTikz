@@ -19,7 +19,7 @@
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:report": "tslint -c tslint.json -p tsconfig.json -t junit -o lint_results/lint_results.xml",
     "prebuild": "rm -r dist || true",
-    "build": "tsc && cp src/index.html dist/index.html",
+    "build": "tsc && cp public/index.html dist && cp -r public/tikzjax/* dist",
     "test": "npm run build && npm run test:raw",
     "test:report": "npm run build && npm run test:raw -- --reporter mocha-junit-reporter --reporter-options mochaFile=./test_results/test_results.xml",
     "test:raw": "mocha \"dist/test/tests/*_test.js\"",
