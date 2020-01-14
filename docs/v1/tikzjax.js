@@ -21854,7 +21854,12 @@ if (document.currentScript === undefined) {
 
 var url = new URL(document.currentScript.src); // host includes the port
 
-var host = url.host;
+var path = window.location.pathname
+if(path.endsWith('/')){
+  path = path.substr(0, path.length - 1)
+}
+
+var host = url.host + path;
 var urlRoot = url.protocol + '//' + host;
 let pages = 1000;
 var coredump;
