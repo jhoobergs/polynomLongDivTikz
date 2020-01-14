@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="http://tikzjax.com/v1/fonts.css">
+    <script src="http://tikzjax.com/v1/tikzjax.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript">
+        function calculateHorner() {
+            console.log("calculating")
+            let p = parsePolynomial(document.getElementById("horner-polynom").value)
+            let a = document.getElementById("horner-integer").value
+            let d = document.getElementById("horner-result")
+            let t = document.getElementById("horner-tikz")
+
+            if(!p || !a){
+                d.innerHTML = 'Please enter a polynom and an integer'
+                return
+            }
+
+            result = hornertex(p, a)
+            console.log(result)
+            d.innerHTML = result
+            let newS = document.createElement('script')
+            newS.setAttribute('type', 'text/tikz')
+            newS.innerHTML = '\\begin{tikzpicture}\n' + result + '\n\\end{tikzpicture}'
+            t.innerHTML = newS.outerHTML
+            window.onload()
+        }
+    </script>
+    <script type="text/javascript">
+        function calculatePolynomLongDivision() {
+            console.log("calculating")
+            let p1 = parsePolynomial(document.getElementById("polynomlongdiv-polynom1").value)
+            let p2 = parsePolynomial(document.getElementById("polynomlongdiv-polynom1").value)
+            let d = document.getElementById("polynomlongdiv-result")
+            let t = document.getElementById("polynomlongdiv-tikz")
+
+            if (!p1 || !p2) {
+                d.innerHTML = 'Please enter two valid polynoms'
+                t.innerHTML = ''
+                return
+            }
+
+            result = toTex(p1, p2)
+            console.log(result)
+            d.innerHTML = result
+            let newS = document.createElement('script')
+            newS.setAttribute('type', 'text/tikz')
+            newS.innerHTML = '\\begin{tikzpicture}\n' + result + '\n\\end{tikzpicture}'
+            t.innerHTML = newS.outerHTML
+            window.onload()
+
+        }
+    </script>
+</head>
+
+<body>
+    Polynom long division:
+    <input id="polynomlongdiv-polynom1" type="text">
+    <input id="polynomlongdiv-polynom2" type="text">
+    <button onclick="calculatePolynomLongDivision()">Calculate</button>
+    <div id="polynomlongdiv-result" style="white-space:pre-wrap;">
+    
+    </div>
+    <div id="polynomlongdiv-tikz">
+      
+    </div>
+
+    HORNER:
+    <input id="horner-polynom" type="text">
+    <input id="horner-integer" type="text">
+    <button onclick="calculateHorner()">Calculate</button>
+    <div id="horner-result" style="white-space:pre-wrap;">
+
+    </div>
+    <div id="horner-tikz">
+    
+    </div>
+</body>
+
+</html>

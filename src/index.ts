@@ -1,4 +1,4 @@
-import prompt from 'prompt-sync'
+//import prompt from 'prompt-sync'
 
 interface PolynomPart {
     factor: number,
@@ -274,4 +274,4 @@ let p3 = parsePolynomial('2x^3+x^2-5x+2')
 //console.info(`Calculating (${p1}) / (${p2})`)
 
 //console.log(toTex(p1, p2))
-console.log(hornertex(p3,3))
+//console.log(hornertex(p3,3))
